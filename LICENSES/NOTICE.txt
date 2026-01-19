@@ -1,0 +1,4 @@
+This component includes STMicroelectronics VL53L1X ULP source files.
+Those files state a dual-license: ST proprietary SLA0081 or BSD-3-Clause.
+This repository distributes the ST files under BSD-3-Clause.
+See headers in st_uld/*.c for the complete text and disclaimer.
