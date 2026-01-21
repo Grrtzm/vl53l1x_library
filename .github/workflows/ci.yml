@@ -16,14 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up ESP-IDF
+      - name: Build example (in ESP-IDF container)
         uses: espressif/esp-idf-ci-action@v1
         with:
           esp_idf_version: v5.5.2
-          command: true
+          command: |
+            cd examples/${{ matrix.example }}
+            idf.py set-target ${{ matrix.target }}
+            idf.py build
 
-      - name: Build example
-        working-directory: examples/${{ matrix.example }}
-        run: |
-          idf.py set-target ${{ matrix.target }}
-          idf.py build
