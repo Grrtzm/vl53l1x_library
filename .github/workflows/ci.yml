@@ -23,9 +23,15 @@ jobs:
             set -e
             export IDF_TARGET=${{ matrix.target }}
 
-            cd "${{ github.workspace }}"
-            REPO_ROOT="$(pwd)"
+            # Find repo root inside the container (checkout ends up under /app/<owner>/<repo>)
+            REPO_ROOT="$(find /app -maxdepth 3 -type f -name idf_component.yml -print -quit | xargs -r dirname)"
+            if [ -z "$REPO_ROOT" ]; then
+              echo "ERROR: Could not locate repo root (idf_component.yml not found under /app)"
+              find /app -maxdepth 3 -type f -name idf_component.yml -print || true
+              exit 1
+            fi
             echo "REPO_ROOT=$REPO_ROOT"
+            cd "$REPO_ROOT"
 
             # Create a real directory with the canonical component name
             mkdir -p /tmp/components/vl53l1x_library
