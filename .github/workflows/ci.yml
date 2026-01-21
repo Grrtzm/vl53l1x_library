@@ -46,7 +46,9 @@ jobs:
             rm -rf /tmp/components/vl53l1x_library/dist || true
             rm -rf /tmp/components/vl53l1x_library/.git || true
 
-            export EXTRA_COMPONENT_DIRS="/tmp/components"
+            export EXTRA_COMPONENT_DIRS="/tmp/components/vl53l1x_library"
+            echo "EXTRA_COMPONENT_DIRS=$EXTRA_COMPONENT_DIRS"
+            ls -la /tmp/components/vl53l1x_library | head
 
             for ex in "$REPO_ROOT"/examples/*; do
               if [ -d "$ex" ] && [ -f "$ex/CMakeLists.txt" ]; then
