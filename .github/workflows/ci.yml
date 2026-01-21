@@ -21,7 +21,9 @@ jobs:
         with:
           esp_idf_version: v5.5.2
           command: |
+            export IDF_TARGET=${{ matrix.target }}
             cd examples/${{ matrix.example }}
             idf.py set-target ${{ matrix.target }}
             idf.py build
+
 
