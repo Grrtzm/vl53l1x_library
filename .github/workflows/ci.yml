@@ -37,11 +37,14 @@ jobs:
             mkdir -p /tmp/components/vl53l1x_library
 
             # Copy repo contents (excluding build artifacts / git metadata)
-            rsync -a --delete \
-              --exclude ".git" \
-              --exclude "dist" \
-              --exclude "**/build" \
-              "$REPO_ROOT"/ /tmp/components/vl53l1x_library/
+            # Copy repo contents without rsync
+            rm -rf /tmp/components/vl53l1x_library/*
+            cp -a "$REPO_ROOT"/. /tmp/components/vl53l1x_library/
+
+            # Optional: remove build artifacts if present
+            find /tmp/components/vl53l1x_library -type d -name build -prune -exec rm -rf {} +
+            rm -rf /tmp/components/vl53l1x_library/dist || true
+            rm -rf /tmp/components/vl53l1x_library/.git || true
 
             export EXTRA_COMPONENT_DIRS="/tmp/components"
 
